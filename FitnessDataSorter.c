@@ -10,7 +10,7 @@ typedef struct {
 } FitnessData;
 
 // Function to tokenize a record
-void tokeniseRecord(char *record, char delimiter, char *date, char *time, int *steps) {
+int tokeniseRecord(char *record, char delimiter, char *date, char *time, int *steps) {
     char *ptr = strtok(record, &delimiter);
     if (ptr != NULL) {
         strcpy(date, ptr);
@@ -20,9 +20,11 @@ void tokeniseRecord(char *record, char delimiter, char *date, char *time, int *s
             ptr = strtok(NULL, &delimiter);
             if (ptr != NULL) {
                 *steps = atoi(ptr);
+                return 0;
             }
         }
     }
+    return 1;
 }
 
 
@@ -39,7 +41,11 @@ int main() {
     int count = 0;
     char line[100];
     while (fgets(line, sizeof(line), file)) {
-        tokeniseRecord(line, ',', data[count].date, data[count].time, &data[count].steps);
+        if (tokeniseRecord(line, ',', data[count].date, data[count].time, &data[count].steps) != 0) {
+            fprintf(stderr, "Error: Invalid record format\n");
+            fclose(file);
+            return 1;
+        }
         count++;
     }
 
