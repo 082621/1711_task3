@@ -59,7 +59,7 @@ int main() {
         return 1;
     }
     for (int i = 0; i < count; i++) {
-        fprintf(newFile, "%s,%s,%d\n", data[i].date, data[i].time, data[i].steps);
+        fprintf(newFile, "%s\t%s\t%d\n", data[i].date, data[i].time, data[i].steps);
     }
     fclose(newFile);
     printf("Data sorted and written to %s\n", newFilename);
