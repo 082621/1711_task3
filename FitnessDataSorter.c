@@ -32,7 +32,7 @@ void sortFitnessData(FitnessData *data, int count) {
     for (int i = 0; i < count - 1; i++) {
         swapped = 0;
         for (int j = 0; j < count - i - 1; j++) {
-            if (data[j].steps < data[j + 1].steps) > 0) {
+            if (data[j].steps < data[j + 1].steps) {
                 FitnessData temp = data[j];
                 data[j] = data[j + 1];
                 data[j + 1] = temp;
