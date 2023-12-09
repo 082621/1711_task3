@@ -12,19 +12,14 @@ typedef struct {
 // Function to tokenize a record
 int tokeniseRecord(char *record, char delimiter, char *date, char *time, int *steps) {
     char *ptr = strtok(record, &delimiter);
-    char *endPtr;
     if (ptr != NULL) {
         strcpy(date, ptr);
         ptr = strtok(NULL, &delimiter);
         if (ptr != NULL) {
             strcpy(time, ptr);
             ptr = strtok(NULL, &delimiter);
-            if (ptr != NULL) {
-                long val = strtol(ptr, &endPtr, 10);
-                if (*endPtr != '\0' || val < 0) {
-                    return 1;
-                }
-                *steps = (int)val;
+            if (ptr != NULL && strlen(ptr) > 2) {
+                *steps = atoi(ptr);
                 return 0;
             }
         }
