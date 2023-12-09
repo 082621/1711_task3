@@ -27,6 +27,23 @@ int tokeniseRecord(char *record, char delimiter, char *date, char *time, int *st
     return 1;
 }
 
+void sortFitnessData(FitnessData *data, int count) {
+    int swapped;
+    for (int i = 0; i < count - 1; i++) {
+        swapped = 0;
+        for (int j = 0; j < count - i - 1; j++) {
+            if (compareFitnessData(&data[j], &data[j + 1]) > 0) {
+                FitnessData temp = data[j];
+                data[j] = data[j + 1];
+                data[j + 1] = temp;
+                swapped = 1;
+            }
+        }
+        if (swapped == 0) {
+            break;
+        }
+    }
+}
 
 int main() {
     char filename[100]; 
@@ -48,7 +65,7 @@ int main() {
         }
         count++;
     }
-
+    sortFitnessData(data, count);
     fclose(file);
 
     char newFilename[110];
